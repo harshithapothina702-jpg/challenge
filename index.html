@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Water Awareness Dashboard - India</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f8ff;
+      color: #2c3e50;
+    }
+
+    header {
+      background: linear-gradient(to right, #3498db, #2ecc71);
+      padding: 20px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin: 40px 0 20px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #2980b9;
+    }
+
+    .charts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .chart-box {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      flex: 1 1 450px;
+    }
+
+    canvas {
+      max-width: 100%;
+      height: auto !important;
+    }
+
+    .info {
+      background: #ecf0f1;
+      border-left: 6px solid #27ae60;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 40px;
+    }
+
+    .info h3 {
+      margin-top: 0;
+    }
+
+    .info ul {
+      padding-left: 20px;
+    }
+
+    .info li {
+      margin-bottom: 10px;
+    }
+
+    footer {
+      margin-top: 60px;
+      background: #34495e;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .charts {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>💧 India Water Awareness Dashboard</h1>
+    <p>Understanding Water Availability & Reducing Pollution Together</p>
+  </header>
+
+  <div class="container">
+
+    <h2 class="section-title">Water Availability in Indian States (%)</h2>
+    <div class="charts">
+      <div class="chart-box">
+        <canvas id="barChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <canvas id="donutChart"></canvas>
+      </div>
+    </div>
+
+    <div class="info">
+      <h3>🌍 How to Reduce Water Pollution in India</h3>
+      <ul>
+        <li>💡 Educate communities about clean water practices.</li>
+        <li>🚱 Avoid dumping chemicals or sewage into rivers/lakes.</li>
+        <li>🌾 Promote organic farming to reduce harmful runoff.</li>
+        <li>🏭 Enforce strict industrial waste treatment laws.</li>
+        <li>🌊 Protect natural wetlands & watersheds.</li>
+        <li>🚰 Harvest rainwater and reduce groundwater overuse.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>
+    Made with 💙 for Water Awareness | India 2025
+  </footer>
+
+  <script>
+    const stateNames = [
+      "Maharashtra", "Uttar Pradesh", "Tamil Nadu", "Rajasthan",
+      "Bihar", "Karnataka", "Gujarat", "Andhra Pradesh", "West Bengal", "Madhya Pradesh"
+    ];
+
+    const waterPercentages = [38, 29, 42, 25, 22, 36, 31, 33, 28, 30];
+
+    // Bar Chart
+    new Chart(document.getElementById('barChart'), {
+      type: 'bar',
+      data: {
+        labels: stateNames,
+        datasets: [{
+          label: 'Water Availability (%)',
+          data: waterPercentages,
+          backgroundColor: 'rgba(52, 152, 219, 0.8)',
+          borderRadius: 6
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'State-wise Water Availability (2025)',
+            font: { size: 18 }
+          },
+          tooltip: {
+            callbacks: {
+              label: ctx => `${ctx.parsed.y}% available`
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            title: { display: true, text: 'Percentage (%)' }
+          },
+          x: {
+            title: { display: true, text: 'States' }
+          }
+        }
+      }
+    });
+
+    // Donut Chart - Types of Water Sources
+    new Chart(document.getElementById('donutChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Groundwater', 'Surface Water', 'Rainwater', 'Recycled Water'],
+        datasets: [{
+          data: [50, 30, 15, 5],
+          backgroundColor: ['#1abc9c', '#3498db', '#f1c40f', '#9b59b6'],
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Water Source Distribution in India',
+            font: { size: 18 }
+          }
+        },
+        cutout: '65%'
+      }
+    });
+  </script>
+
+</body>
+</html>
