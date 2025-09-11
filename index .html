@@ -10,141 +10,157 @@
     margin: 0;
     background: #e0f7fa;
     color: #004d40;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
   }
   header {
-    background: #00796b;
+    background-color: #00796b;
     color: white;
     padding: 1rem 2rem;
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  header svg {
+    width: 40px;
+    height: 40px;
+    fill: #b2dfdb;
+  }
+  h1 {
+    margin: 0;
+    font-weight: 700;
   }
   main {
-    flex: 1;
-    padding: 2rem;
     max-width: 900px;
-    margin: 0 auto;
-  }
-  h2 {
-    margin-top: 0;
-    color: #004d40;
-  }
-  #chart-container {
+    margin: 2rem auto;
     background: white;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   }
   canvas {
     max-width: 100%;
+    height: 400px;
   }
-  .advice {
+  section.advice {
     margin-top: 2rem;
     background: #b2dfdb;
-    padding: 1rem 1.5rem;
+    padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: inset 0 0 10px #004d40;
   }
-  .advice ul {
+  section.advice h2 {
+    margin-top: 0;
+  }
+  ul {
+    margin: 0;
     padding-left: 1.2rem;
   }
-  .advice li {
-    margin-bottom: 0.7rem;
-    font-size: 1.1rem;
+  ul li {
+    margin-bottom: 0.5rem;
   }
   footer {
-    background: #004d40;
-    color: white;
     text-align: center;
-    padding: 1rem 0;
+    padding: 1rem;
     font-size: 0.9rem;
+    color: #004d40;
   }
-  @media(max-width:600px) {
+  @media(max-width: 600px) {
     main {
+      margin: 1rem;
       padding: 1rem;
+    }
+    canvas {
+      height: 300px;
     }
   }
 </style>
 </head>
 <body>
 
-<header>Water Pollution in India - Dashboard</header>
+<header>
+  <!-- Water Drop SVG Logo -->
+  <svg viewBox="0 0 64 64" aria-label="Water Drop Logo" role="img" xmlns="http://www.w3.org/2000/svg">
+    <path d="M32 2C19 22 8 34 8 46a24 24 0 0 0 48 0c0-12-11-24-24-44z" />
+  </svg>
+  <h1>Water Pollution in India - State-wise Dashboard</h1>
+</header>
 
 <main>
-  <section id="chart-container">
-    <h2>Water Pollution Levels in Selected Indian States (2020)</h2>
-    <canvas id="pollutionChart"></canvas>
-  </section>
+  <canvas id="pollutionChart" aria-label="Bar chart showing water pollution levels by state" role="img"></canvas>
 
-  <section class="advice">
-    <h2>How to Reduce Water Pollution in India</h2>
+  <section class="advice" aria-labelledby="advice-title">
+    <h2 id="advice-title">How to Reduce Water Pollution in India</h2>
     <ul>
-      <li>Implement strict regulations on industrial waste disposal.</li>
-      <li>Promote awareness about proper sewage treatment and sanitation.</li>
-      <li>Encourage usage of eco-friendly farming techniques to reduce chemical runoff.</li>
-      <li>Organize community clean-up drives for rivers and lakes.</li>
-      <li>Invest in modern water treatment plants and infrastructure.</li>
-      <li>Ban or limit single-use plastics and harmful chemicals.</li>
-      <li>Promote rainwater harvesting and groundwater recharge.</li>
+      <li>Properly treat industrial waste before releasing it into water bodies.</li>
+      <li>Promote awareness and community clean-up drives near rivers and lakes.</li>
+      <li>Reduce use of chemical fertilizers and pesticides in agriculture.</li>
+      <li>Implement strict regulations on sewage treatment plants.</li>
+      <li>Encourage water conservation and reduce plastic waste in water sources.</li>
+      <li>Support eco-friendly sanitation infrastructure in rural and urban areas.</li>
     </ul>
   </section>
 </main>
 
-<footer>© 2025 Water Conservation Initiative</footer>
+<footer>
+  &copy; 2025 Water Pollution Awareness India
+</footer>
 
-<!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
-  const ctx = document.getElementById('pollutionChart').getContext('2d');
-
-  // Sample data: Water Pollution Index (WPI) in various states (fictional numbers)
-  const pollutionData = {
-    labels: ['Uttar Pradesh', 'Bihar', 'West Bengal', 'Maharashtra', 'Tamil Nadu', 'Punjab', 'Kerala'],
+  // Sample water pollution data (Pollution Index: higher means more pollution)
+  const data = {
+    labels: ['Uttar Pradesh', 'Maharashtra', 'Bihar', 'West Bengal', 'Tamil Nadu', 'Karnataka', 'Assam', 'Punjab', 'Gujarat', 'Rajasthan'],
     datasets: [{
-      label: 'Water Pollution Index (WPI)',
-      data: [85, 78, 90, 65, 55, 40, 30],
-      backgroundColor: 'rgba(0, 121, 107, 0.6)',
-      borderColor: 'rgba(0, 77, 64, 1)',
+      label: 'Water Pollution Index',
+      data: [85, 70, 60, 75, 55, 50, 65, 40, 45, 30],
+      backgroundColor: 'rgba(0, 150, 136, 0.7)',
+      borderColor: 'rgba(0, 105, 92, 1)',
       borderWidth: 1,
-      hoverBackgroundColor: 'rgba(0, 150, 136, 0.8)'
+      borderRadius: 5,
+      maxBarThickness: 50,
     }]
   };
 
   const config = {
     type: 'bar',
-    data: pollutionData,
+    data: data,
     options: {
       responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Water Pollution Levels by State in India (2025)',
+          font: { size: 20, weight: 'bold' }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => `${ctx.parsed.y} (Higher = More Polluted)`
+          }
+        }
+      },
       scales: {
         y: {
           beginAtZero: true,
           max: 100,
           title: {
             display: true,
-            text: 'Pollution Level (WPI)'
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          labels: {
-            color: '#004d40',
-            font: { size: 14 }
+            text: 'Pollution Index'
           }
         },
-        title: {
-          display: false
+        x: {
+          title: {
+            display: true,
+            text: 'States'
+          }
         }
       }
     }
   };
 
-  const pollutionChart = new Chart(ctx, config);
+  // Render the chart
+  const ctx = document.getElementById('pollutionChart').getContext('2d');
+  new Chart(ctx, config);
 </script>
 
 </body>
 </html>
+
